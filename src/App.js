@@ -1,15 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './routes/Home';
+import HomePage from './routes/HomePage';
+import AdherentPage from './routes/AdherentPage';
+import AddAdherentPage from './routes/AddAdherentPage';
+import LivrePage from './routes/LivrePage';
+import { useParams } from 'react-router-dom';
+
 
 function App() {
+
+  const [sidebarVisible, setSidebarVisible] = useState(true);
+
+
+  const params = useParams();
+
+  console.log(params);
+
   return (
     <Router>
       <Routes>
-        <Route path="/home" element={<Home />} />
+        {/* <Route exact path="/" render={() => (<Redirect to="/home" />)} /> */}
+        <Route path="/home" element={<HomePage/>} />
+        <Route path="/adherents">
+          <Route index element={<AdherentPage/>} />
+          <Route path="add" element={<AddAdherentPage/>} />
+        </Route>
+        <Route path="/livre" element={<LivrePage/>} />
       </Routes>
     </Router>
   );
 }
+
 
 export default App;
