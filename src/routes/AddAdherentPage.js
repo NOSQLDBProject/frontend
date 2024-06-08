@@ -13,12 +13,25 @@ export default function AddAdherentPage() {
     const [status, setStatus] = useState("married");
     const [gender, setGender] = useState("");
     const navigate = useNavigate();
-
+    const [adherent1, setAdherent] = useState({
+        id:"",
+        nom: '',
+        prenom: '',
+        cin: '',
+        email: '',
+        telephone: ''
+      });
 
     const optionsList = [
         { value: 'married', name: 'Married' },
         { value: 'single', name: 'Single' },
     ];
+
+    function getRandomNumber() {
+        const min = 100000000;
+        const max = 999999999;
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -30,7 +43,38 @@ export default function AddAdherentPage() {
         console.log("Age:", age);
         console.log("Status:", status);
         console.log("Gender:", gender);
-    }
+        const adherent = {
+            id:getRandomNumber(),
+            nom: nom,
+            prenom: prenom,
+            cin: cin,
+            email: email,
+            telephone: telephone
+        };
+        fetch('http://localhost:8000/adherents/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+            body: JSON.stringify(adherent)
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Adherent added:', data);
+            // Clear form
+            setAdherent({
+                id:1,
+                nom: nom,
+                prenom: prenom,
+                cin: cin,
+                email: email,
+                telephone: telephone
+            });
+          })
+          .catch(error => console.error('Error:', error));
+          navigate("/adherents")
+        };
+
 
     return (
         <SharedPage path="/adherents/add">
