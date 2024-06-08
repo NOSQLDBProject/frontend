@@ -9,12 +9,12 @@ import { useParams } from 'react-router-dom';
 
 function App() {
 
-  const [sidebarVisible, setSidebarVisible] = useState(true);
+  // const [sidebarVisible, setSidebarVisible] = useState(true);
 
 
-  const params = useParams();
+  // const params = useParams();
 
-  console.log(params);
+  // console.log(params);
 
   return (
     <Router>

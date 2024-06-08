@@ -5,7 +5,7 @@ import { FaUsers } from "react-icons/fa";
 import { BsBank } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
-
+import logo from "../assets/LibraConnect.svg"
 export default function SharedPage({children,path}) {
 
     const navigate = useNavigate();
@@ -19,17 +19,17 @@ export default function SharedPage({children,path}) {
 
 
     useEffect(() => {
-        if (path.startsWith("/livre")) {
+        if (path?.startsWith("/livre")) {
             setIsLivrePath(true);
             setIsAdherentPath(false);
             setIsPretPath(false);
         }
-        if(path.startsWith("/adherents")) {
+        if(path?.startsWith("/adherents")) {
             setIsLivrePath(false);
             setIsAdherentPath(true);
             setIsPretPath(false);
         }
-        if(path.startsWith("/prets")) {
+        if(path?.startsWith("/prets")) {
             setIsLivrePath(false);
             setIsAdherentPath(false);
             setIsPretPath(true);
@@ -51,41 +51,38 @@ export default function SharedPage({children,path}) {
 
 
     return (
-        <body className='w-full h-full'>
-            <div className='w-full h-[10vh] flex bg-gradient-to-r from-[#3E27C9] to-[#2F0C7A] p-4'>
+        <body className='w-full h-full bg-[#F4F7FC]'>
+            <div className='w-full h-[10vh] flex bg-white p-4 shadow-md mb-[8px] z-10 '>
                 <div className={`font-maven-pro font-black text-white text-[4vh] mt-auto mb-auto 
-                transition-all duration-500 ease-in-out ${sidebarVisible ? '' : 'translate-x-[-20vw]'}`}>
-                    BookNow
+                transition-all duration-500 ease-in-out`}>
+                    <img src={logo} className='w-[12vw]'/>
                 </div>
-                {sidebarVisible && (
-                    <IoMdCloseCircleOutline className={`text-[5vh] text-white mt-auto mb-auto cursor-pointer hover:opacity-75 transition-all duration-500 ease-in-out ${sidebarVisible ? 'translate-x-[10vw]' : 'translate-x-[-11vw]'}`} onClick={toggleSidebar}/>
-                )}
-                {!sidebarVisible && (
-                    <FaBars className={`text-[5vh] text-white mt-auto mb-auto cursor-pointer hover:opacity-75 transition-all duration-500 ease-in-out ${showMenuButton ? 'ml-[10vw]' : 'ml-[-11vw]'}`} onClick={toggleSidebar}/>
-                )}
                 <div className='w-[3vw] h-[6vh] rounded-full bg-red-600 mb-auto mt-auto ml-auto text-white font-maven-pro font-black text-[3vh] text-center pt-1 cursor-pointer hover:opacity-75'>
                     AA
                 </div>
             </div>
-            <div className='flex flex-wrap-2'>
-                <div className={`w-[22vw] h-[90vh] bg-[#212121] pt-[3vh] transition-all duration-500 ease-in-out ${sidebarVisible ? '' : 'translate-x-[-22vw]'}`}>
-                    <div className={`border-b border-gray-600 cursor-pointer w-full h-[10vh] 
-                    hover:bg-[#3E27C9] flex ${isLivrePath? 'bg-[#3E27C9]' : ""}`} onClick={() => navigateTo("/livre")}>
-                        <FaBook className='text-[4vh] text-white mt-auto mb-auto ml-[2vw]'/>
-                        <p className='mt-auto mb-auto ml-2 text-white text-[4vh] font-comfortaa'>Livres</p>
+            <div className='flex flex-col'>
+                <div className={`w-[5vw] h-[90vh] bg-[#4874ED] pt-[3vh] mt-[-8px]`}>
+                    <div className={`cursor-pointer w-full h-[10vh]
+                    flex ${isLivrePath? 'bg-[#4874ED]' : ""}`} onClick={() => navigateTo("/livre")}>
+                        <div className='flex h-[65%] w-[65%] hover:bg-white/35 m-auto rounded-[12px]'>
+                            <FaBook className='text-[3vh] text-white m-auto'/>
+                        </div>
                     </div>
-                    <div className={`border-b border-gray-600 cursor-pointer w-full h-[10vh] 
-                    hover:bg-[#3E27C9] flex ${isAdherentPath? 'bg-[#3E27C9]' : ""}`} onClick={() => navigateTo("/adherents")}>
-                        <FaUsers className='text-[4vh] text-white mt-auto mb-auto ml-[2vw]'/>
-                        <p className='mt-auto mb-auto ml-2 text-white text-[4vh] font-comfortaa'>Adherents</p>
+                    <div className={`cursor-pointer w-full h-[10vh]
+                    flex ${isLivrePath? 'bg-[#4874ED]' : ""}`} onClick={() => navigateTo("/adherents")}>
+                        <div className='flex h-[65%] w-[65%] hover:bg-white/35 m-auto rounded-[12px]'>
+                            <FaUsers className='text-[3vh] text-white m-auto'/>
+                        </div>
                     </div>
-                    <div className={`border-b border-gray-600 cursor-pointer w-full h-[10vh] 
-                    hover:bg-[#3E27C9] flex ${isPretPath? 'bg-[#3E27C9]' : ""}`}>
-                        <BsBank className='text-[4vh] text-white mt-auto mb-auto ml-[2vw]'/>
-                        <p className='mt-auto mb-auto ml-2 text-white text-[4vh] font-comfortaa'>Prets</p>
+                    <div className={`cursor-pointer w-full h-[10vh]
+                    flex ${isLivrePath? 'bg-[#4874ED]' : ""}`} onClick={() => navigateTo("/prets")}>
+                        <div className='flex h-[65%] w-[65%] hover:bg-white/35 m-auto rounded-[12px]'>
+                            <BsBank className='text-[3vh] text-white m-auto'/>
+                        </div>
                     </div>
                 </div>
-                <div className={`overflow-y-scroll h-[90vh] flex fixed flex-wrap bg-white  ${sidebarVisible ? 'w-[79vw] ml-[22vw] duration-700 ease-in-out' : 'w-[100vw] duration-300 ease-in'}`}>
+                <div className={`overflow-y-hidden h-[89vh] w-[95vw] flex fixed flex-wrap bg-[#F4F7FC] ml-[5vw] `}>
                     {children}
                 </div>
             </div>
