@@ -124,12 +124,10 @@ export default function LivrePage() {
         
 
         <div class="button-container">
-            <p class="footer-title">There’s even more to watch.</p>
+            <p class="footer-title">There’s even more to read.</p>
             
             
-            <p class="footer-description">Emiflix has an extensive library of feature films, documentaries, TV shows, anime,
-                award-winning Emiflix originals, and
-                more. Watch as much as you want, anytime you want.</p>
+            <p class="footer-description">LibraConnect has an extensive library of books across various genres, including fiction, non-fiction, biographies, self-help, and award-winning titles. Read as much as you want, anytime you want.</p>
                     <button class="footer-button">JOIN NOW</button>
 
 
