@@ -82,7 +82,7 @@ export default function SharedPage({children,path}) {
                         </div>
                     </div>
                 </div>
-                <div className={`overflow-y-hidden h-[89vh] w-[95vw] flex fixed flex-wrap bg-[#F4F7FC] ml-[5vw] `}>
+                <div className={`overflow-y-scroll h-[89vh] w-[95vw] flex fixed flex-wrap bg-[#F4F7FC] ml-[5vw] `}>
                     {children}
                 </div>
             </div>
