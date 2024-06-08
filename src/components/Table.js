@@ -8,30 +8,22 @@ export default function Table() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    // Replace with actual data fetching logic
-    const fetchData = async () => {
-      // Simulating data fetching
-      const mockData = [
-        { firstName: 'John', lastName: 'Doe', cin: '123456', age: 28, phoneNumber: '123-456-7890' },
-        { firstName: 'Jane', lastName: 'Smith', cin: '654321', age: 34, phoneNumber: '987-654-3210' },
-        { firstName: 'John', lastName: 'Doe', cin: '123456', age: 28, phoneNumber: '123-456-7890' },
-        { firstName: 'Jane', lastName: 'Smith', cin: '654321', age: 34, phoneNumber: '987-654-3210' },
-        { firstName: 'John', lastName: 'Doe', cin: '123456', age: 28, phoneNumber: '123-456-7890' },
-        { firstName: 'Jane', lastName: 'Smith', cin: '654321', age: 34, phoneNumber: '987-654-3210' },
-        { firstName: 'John', lastName: 'Doe', cin: '123456', age: 28, phoneNumber: '123-456-7890' },
-        { firstName: 'Jane', lastName: 'Smith', cin: '654321', age: 34, phoneNumber: '987-654-3210' },
-        { firstName: 'John', lastName: 'Doe', cin: '123456', age: 28, phoneNumber: '123-456-7890' },
-        { firstName: 'Jane', lastName: 'Smith', cin: '654321', age: 34, phoneNumber: '987-654-3210' },
-        { firstName: 'John', lastName: 'Doe', cin: '123456', age: 28, phoneNumber: '123-456-7890' },
-        { firstName: 'Jane', lastName: 'Smith', cin: '654321', age: 34, phoneNumber: '987-654-3210' },
-        { firstName: 'John', lastName: 'Doe', cin: '123456', age: 28, phoneNumber: '123-456-7890' },
-        { firstName: 'Jane', lastName: 'Smith', cin: '654321', age: 34, phoneNumber: '987-654-3210' },
-        // Add more data as needed
-      ];
-      setData(mockData);
+    fetch('http://localhost:8000/adherents/all')
+        .then(response => {
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Adherents:', data);
+        })
+        .catch(error => {
+            console.error('Error fetching adherents:', error);
+        });
     };
 
-    fetchData();
   }, []);
 
   return (
