@@ -35,8 +35,8 @@ export default function AddBookPage() {
     }, []);
 
     function getRandomNumber() {
-        const min = 100000000;
-        const max = 999999999;
+        const min = 10000000;
+        const max = 99999999;
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
@@ -59,6 +59,7 @@ export default function AddBookPage() {
                 description: description
             };
             const bookneo4j = {
+                id:getRandomNumber(),
                 titre: titre,
                 isbn: isbn,
                 type: type,
@@ -93,7 +94,7 @@ export default function AddBookPage() {
             })
             .catch(error => console.error('Error:', error));
 
-        //   navigate("/livre")
+          navigate("/livre")
         };
 
 

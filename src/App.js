@@ -9,15 +9,10 @@ import Login from './routes/Login';
 import SignUp from './routes/SignUp';
 import AddBookPage from './routes/AddBookPage';
 import AddAuteurPage from './routes/AddAuteurPage';
+import Book from './routes/Book';
 
 function App() {
 
-  const [sidebarVisible, setSidebarVisible] = useState(true);
-
-
-  const params = useParams();
-
-  console.log(params);
 
   return (
     <Router>
@@ -34,6 +29,7 @@ function App() {
         <Route path="/livre">
           <Route index element={<LivrePage/>} />
           <Route path="add" element={<AddBookPage/>} />
+          <Route path="book/:bookId/:auteurId" element={<Book/>} />
         </Route>
       </Routes>
     </Router>
