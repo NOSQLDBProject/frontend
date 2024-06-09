@@ -1,4 +1,4 @@
-import '../components/Table.css'
+import '../components/Table.css';
 import React, { useState, useEffect } from 'react';
 import search from '../assets/search.svg';
 import delet from '../assets/delete.svg';
@@ -9,27 +9,25 @@ export default function Table() {
 
   useEffect(() => {
     fetch('http://localhost:8000/adherents/all')
-        .then(response => {
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Adherents:', data);
-        })
-        .catch(error => {
-            console.error('Error fetching adherents:', error);
-        });
-    };
-
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Adherents:', data);
+        setData(data); // Update state with fetched data
+      })
+      .catch(error => {
+        console.error('Error fetching adherents:', error);
+      });
   }, []);
 
   return (
     <div>
       <div className="bare">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
       </div>
       <div>
         <nav className="navbar navbar-light bg-light">

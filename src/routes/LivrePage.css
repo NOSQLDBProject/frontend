@@ -1,0 +1,114 @@
+
+
+.title {
+    font-size: 2.75rem;
+    font-weight: 900;
+    color: #1578DA;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin-bottom: 0px;
+
+}
+
+.description {
+    color: #1578DA;
+    width: 600px;
+}
+
+.movie {
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 20px;
+}
+.movie-thumbnail:hover {
+    scale: 1.03;
+    opacity: 0.5;
+}
+
+.movie-thumbnail {
+    margin-bottom: 0;
+ 
+}
+
+.image {
+    height: 400px;
+}
+
+.movie-title {
+    display: flex;
+    justify-content: center;
+    color: rgb(256,256,256,0.9);
+    font-weight: 900;
+    font-size: 15px;
+}
+
+.movie-title-content {
+    text-align: center;
+    color: #1578DA;
+}
+
+
+.scroll-wrapper {
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-bottom: 40px;
+
+    margin-left: 0px;
+    padding-left: 0px;
+        scrollbar-color: #1578DA gray;
+            
+}
+
+.slider-title {
+    color: #1578DA;
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 7px;
+}
+
+.footer-title {
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #1578DA;
+    font-size: 60px;
+}
+
+.footer-description {
+    text-align: center;
+    color: #1578DA;
+    font-size: 30px;
+    width: 700px;
+
+}
+
+.footer-button {
+font-size: 20px;
+    min-height: 48px;
+    min-width: 112px;
+    background: #1578DA;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .45);
+    border: none;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    width: 200px;
+}
+.footer {
+    margin-bottom: 100px;
+}
+
+.footer-button:hover {
+    opacity: 0.9;
+}
+
+.footer-button:active {
+    opacity: 0.8;
+}
+
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
