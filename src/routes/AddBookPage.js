@@ -9,15 +9,9 @@ export default function AddBookPage() {
     const [nbCopy, setNbCopy] = useState("");
     const [imagePath, setImagePath] = useState("");
     const [type, setType] = useState("");
-    const [auteur, setAuteur] = useState("");
-    const [book1, setBook] = useState({
-        id:"",
-        titre: '',
-        isbn: '',
-        nbCopy: '',
-        imagePath: '',
-        type:""
-      });
+    const [auteur, setAuteur] = useState();
+    const [description, setDescription] = useState("");
+    
     const [optionsList, setOptionsList] = useState([]);
 
     useEffect(() => {
@@ -33,6 +27,7 @@ export default function AddBookPage() {
                 const newOptionsList = data.map((auteur) => ({ value: auteur.id, name: auteur.name }));
                 setOptionsList(newOptionsList);
                 console.log('Options:', newOptionsList);
+                setAuteur(newOptionsList[0].value);
             })
             .catch(error => {
                 console.error('Error fetching auteurs:', error);
@@ -46,13 +41,64 @@ export default function AddBookPage() {
     }
 
     const handleSubmit = (event) => {
-        
-          navigate("/livre")
+        event.preventDefault();
+          console.log("Titre:", titre);
+            console.log("ISBN:", isbn);
+            console.log("nbCopy:", nbCopy);
+            console.log("imagePath:", imagePath);
+            console.log("type:", type);
+            console.log("auteur:", auteur);
+            const bookMongo = {
+                id:getRandomNumber(),
+                titre: titre,
+                isbn: isbn,
+                nbCopy: nbCopy,
+                imagePath: imagePath,
+                type: type,
+                estDisponible:true,
+                description: description
+            };
+            const bookneo4j = {
+                titre: titre,
+                isbn: isbn,
+                type: type,
+                imagePath: imagePath,
+                auteurId: auteur,
+                description: description
+            }
+
+            fetch('http://localhost:8000/livres/mongo/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+                body: JSON.stringify(bookMongo)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Book added:', data);
+            })
+            .catch(error => console.error('Error:', error));
+
+            fetch('http://localhost:8000/livres/neo4j', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+                body: JSON.stringify(bookneo4j)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Book added:', data);
+            })
+            .catch(error => console.error('Error:', error));
+
+        //   navigate("/livre")
         };
 
 
     return (
-        <SharedPage path="/adherents/add">
+        <SharedPage path="/livre/add">
             <form className="flex flex-col w-full m-auto items-center " onSubmit={handleSubmit}>
                 <div className="flex flex-row justify-between w-[90%] ">
                     <div className="flex flex-col w-[48%]">
@@ -66,7 +112,7 @@ export default function AddBookPage() {
                         value={isbn} onChange={(event) => setIsbn(event.target.value)}/>
                     </div>
                 </div>
-                <div className="flex flex-row justify-between w-[90%] mt-[40px]">
+                <div className="flex flex-row justify-between w-[90%] mt-[30px]">
                     <div className="flex flex-col w-[48%]">
                         <label htmlFor="nbCopy" className="text-[20px] font-maven-pro font-bold mb-[11px]">Copies Number</label>
                         <input type="text" id="nbCopy" name="nbCopy" className="h-[50px] rounded-[10px] bg-[#E8EAEF] pl-[15px] pr-[15px] focus:ring-2 focus:ring-blue-600 focus:outline-none" 
@@ -78,7 +124,7 @@ export default function AddBookPage() {
                         value={imagePath} onChange={(event) => setImagePath(event.target.value)}/>
                     </div>
                 </div>
-                <div className="flex flex-row justify-between w-[90%]  mt-[40px]">
+                <div className="flex flex-row justify-between w-[90%]  mt-[30px]">
                     <div className="flex flex-col  w-[48%] ">
                         <label htmlFor="type" className="text-[20px] font-maven-pro font-bold mb-[11px]">Type</label>
                         <input type="text" id="type" name="type" className="h-[50px] rounded-[10px] bg-[#E8EAEF] pl-[15px] pr-[15px] focus:ring-2 focus:ring-blue-600 focus:outline-none" 
@@ -95,10 +141,18 @@ export default function AddBookPage() {
                             ))}
                         </select>
                     </div>
+                    
                 </div>
+                <div className="flex flex-row justify-between w-[90%]  mt-[20px]">
+                    <div className="flex flex-col  w-[100%] ">
+                        <label htmlFor="description" className="text-[20px] font-maven-pro font-bold mb-[11px]">Description</label>
+                        <input type="text" id="description" name="description" className="h-[50px] rounded-[10px] bg-[#E8EAEF] pl-[15px] pr-[15px] focus:ring-2 focus:ring-blue-600 focus:outline-none" 
+                        value={description} onChange={(event) => setDescription(event.target.value)}/>
+                    </div>
+                    </div>
                 
                 <div className="flex flex-row justify-center mt-[20px] w-full gap-5">
-                    <button className="text-lg text-[#4874ED] font-normal rounded-lg h-16 w-64 border border-blue-600 font-comfortaa hover:opacity-75" onClick={() => navigate("/adherents")}>
+                    <button className="text-lg text-[#4874ED] font-normal rounded-lg h-16 w-64 border border-blue-600 font-comfortaa hover:opacity-75" onClick={() => navigate("/livre")}>
                         Back
                     </button>
                     <button className="text-lg text-white bg-[#4874ED] font-normal rounded-lg h-16 w-64 border border-white font-comfortaa hover:opacity-75" type="submit">
@@ -106,6 +160,8 @@ export default function AddBookPage() {
                     </button>
                 </div>
             </form>
+            <button className="w-[100px] h-[30px] text-white text-[12px] font-maven-pro bg-[#1578DA] ml-auto mr-auto rounded-[10px]" onClick={() => {navigate("/add/auteur")}}>Add Author</button>
+
         </SharedPage>
     );
 }

@@ -65,20 +65,20 @@ export default function SharedPage({children,path}) {
                 <div className={`w-[5vw] h-[90vh] bg-[#4874ED] pt-[3vh] mt-[-8px]`}>
                     <div className={`cursor-pointer w-full h-[10vh]
                     flex ${isLivrePath? 'bg-[#4874ED]' : ""}`} onClick={() => navigateTo("/livre")}>
-                        <div className='flex h-[65%] w-[65%] hover:bg-white/35 m-auto rounded-[12px]'>
-                            <FaBook className='text-[3vh] text-white m-auto'/>
+                        <div className={`flex h-[65%] w-[65%] hover:bg-white/35 m-auto rounded-[12px] ${isLivrePath && 'bg-white/35'}`}>
+                            <FaBook className={`text-[3vh] text-white m-auto `}/>
                         </div>
                     </div>
                     <div className={`cursor-pointer w-full h-[10vh]
-                    flex ${isLivrePath? 'bg-[#4874ED]' : ""}`} onClick={() => navigateTo("/adherents")}>
-                        <div className='flex h-[65%] w-[65%] hover:bg-white/35 m-auto rounded-[12px]'>
-                            <FaUsers className='text-[3vh] text-white m-auto'/>
+                    flex ${isAdherentPath? 'bg-[#4874ED]' : ""}`} onClick={() => navigateTo("/adherents")}>
+                        <div className={`flex h-[65%] w-[65%] hover:bg-white/35 m-auto rounded-[12px] ${isAdherentPath && 'bg-white/35'}`}>
+                            <FaUsers className={`text-[3vh] text-white m-auto `}/>
                         </div>
                     </div>
                     <div className={`cursor-pointer w-full h-[10vh]
-                    flex ${isLivrePath? 'bg-[#4874ED]' : ""}`} onClick={() => navigateTo("/prets")}>
-                        <div className='flex h-[65%] w-[65%] hover:bg-white/35 m-auto rounded-[12px]'>
-                            <BsBank className='text-[3vh] text-white m-auto'/>
+                    flex ${isPretPath? 'bg-[#4874ED]' : ""}`} onClick={() => navigateTo("/prets")}>
+                        <div className={`flex h-[65%] w-[65%] hover:bg-white/35 m-auto rounded-[12px] ${isPretPath && 'bg-white/35'}`}>
+                            <BsBank className={`text-[3vh] text-white m-auto`}/>
                         </div>
                     </div>
                 </div>
