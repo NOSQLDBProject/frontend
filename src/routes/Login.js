@@ -1,6 +1,7 @@
 import image from '../assets/Library-rafiki.png';
 import logo from '../assets/LibraConnect.svg';
 export default function Login() {
+    const navigateTo = useNavigate();
     return(
         
 <div class="flex flex-col sm:flex-row bg-[#EBF0FF]">

@@ -1,6 +1,6 @@
 import React from "react"; 
 import SharedPage from "./SharedPage";
-import EnhancedTable from "../components/Table";
+import Table from "../components/Table";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
@@ -15,7 +15,7 @@ export default function AdherentPage() {
         <SharedPage path="/adherents">
 
             <div className='w-[90%] h-full m-auto'>
-                <EnhancedTable/>
+                <Table type="adherents" />
             </div>
         </SharedPage>
     );

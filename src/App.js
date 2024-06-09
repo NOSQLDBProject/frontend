@@ -26,6 +26,10 @@ function App() {
           <Route index element={<AdherentPage/>} />
           <Route path="add" element={<AddAdherentPage/>} />
         </Route>
+        <Route path='/loans' >
+          <Route index element={<LoanPage />} />
+          <Route path="add" element={<AddLoanPage />} />
+        </Route>
         <Route path="/livre">
           <Route index element={<LivrePage/>} />
           <Route path="add" element={<AddBookPage/>} />
