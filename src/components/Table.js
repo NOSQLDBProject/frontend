@@ -63,7 +63,7 @@ export default function Table({ type }) {
                   <input className="form-control me-4" name="searchQuery" type="search" placeholder={`Search ${type}`} aria-label="Search" />
                   <input className="form-control me-4" name="searchDate" type="date" placeholder="Search by date" aria-label="Search by date" />
                   <button className="btn btn-outline-success" type="search">Search</button>
-                  <button className="btn btn-outline-success" onClick={() => { navigate(`/${type}/add`) }} >Add {type.charAt(0).toUpperCase() + type.slice(1)}</button>
+                  <button className="btn btn-outline-success" onClick={() => { if (type!="loans") {navigate(`/${type}/add`) } else {navigate("/prets/add")}}} >Add {type.charAt(0).toUpperCase() + type.slice(1)}</button>
                 </div>
               </form>
             </div>

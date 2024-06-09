@@ -9,6 +9,8 @@ import Login from './routes/Login';
 import AddBookPage from './routes/AddBookPage';
 import AddAuteurPage from './routes/AddAuteurPage';
 import Book from './routes/Book';
+import AddLoanPage from './routes/addLoanPage';
+import LoanPage from './routes/LoanPage';
 
 function App() {
 
@@ -23,7 +25,7 @@ function App() {
           <Route index element={<AdherentPage/>} />
           <Route path="add" element={<AddAdherentPage/>} />
         </Route>
-        <Route path='/loans' >
+        <Route path='/prets' >
           <Route index element={<LoanPage />} />
           <Route path="add" element={<AddLoanPage />} />
         </Route>

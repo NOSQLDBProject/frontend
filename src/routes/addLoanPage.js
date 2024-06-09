@@ -14,7 +14,6 @@ export default function AddLoanPage() {
         const loan = {
             bookTitle: bookTitle,
             borrower: borrower,
-            // Loan date and return date will be managed automatically
         };
 
         fetch('http://localhost:8000/loans/add', {

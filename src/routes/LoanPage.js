@@ -8,11 +8,11 @@ export default function LoanPage() {
     const navigate = useNavigate();
 
     const navigateAdd = () => {
-        navigate('add');
+        navigate('prets');
     }
 
     return(
-        <SharedPage path="/loans">
+        <SharedPage path="/prets">
             <div className='w-[90%] h-full m-auto'>
                 <Table type='loans'/>
             </div>
