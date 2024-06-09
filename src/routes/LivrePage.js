@@ -55,7 +55,7 @@ export default function LivrePage() {
 
     return (
         <SharedPage path="/livre">
-            <div className="p-10 max-h-screen overflow-y-auto">
+            <div className="p-10 max-h-screen ">
             <p className="title">Books</p>
     <p className="description">Books transport us to new worlds, offering thrilling, humorous, and insightful experiences. With countless titles and genres, there's always an adventure waiting. Explore our catalog and discover your next great read.</p>
                 <p className="slider-title">Personal Development</p>
@@ -130,6 +130,9 @@ export default function LivrePage() {
             <p class="footer-description">LibraConnect has an extensive library of books across various genres, including fiction, non-fiction, biographies, self-help, and award-winning titles. Read as much as you want, anytime you want.</p>
                     <button class="footer-button">JOIN NOW</button>
 
+
+        </div>
+        <div className="h-10 w-full">
 
         </div>
     </div>
