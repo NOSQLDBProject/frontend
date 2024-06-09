@@ -3,10 +3,11 @@ import React, { useState, useEffect } from 'react';
 import search from '../assets/search.svg';
 import delet from '../assets/delete.svg';
 import edit from '../assets/edit.svg';
+import { useNavigate } from 'react-router-dom';
 
 export default function Table() {
   const [data, setData] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetch('http://localhost:8000/adherents/all')
         .then(response => {
@@ -18,13 +19,30 @@ export default function Table() {
         })
         .then(data => {
             console.log('Adherents:', data);
+            setData(data);
         })
         .catch(error => {
             console.error('Error fetching adherents:', error);
         });
-    };
-
   }, []);
+
+  const deleteAdherent = (id) => {
+    fetch(`http://localhost:8000/adherents/${id}`, {
+        method: 'DELETE',
+        mode: 'cors',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        console.log('Adherent deleted successfully');
+        const newData = data.filter(item => item.id !== id);
+        setData(newData);
+    })
+    .catch(error => {
+        console.error('Error deleting adherent:', error);
+    });
+}
 
   return (
     <div>
@@ -44,7 +62,7 @@ export default function Table() {
                   <input className="form-control me-4" name="searchQuery" type="search" placeholder="Search Subscriber" aria-label="Search" />
                   <input className="form-control me-4" name="searchDate" type="date" placeholder="Search by date" aria-label="Search by date" />
                   <button className="btn btn-outline-success" type="search">Search</button>
-                  <button className="btn btn-outline-success" type="submit" routerLink="/ai">Add Subscriber</button>
+                  <button className="btn btn-outline-success" onClick={()=>{navigate("/adherents/add")}} >Add Subscriber</button>
                 </div>
               </form>
             </div>
@@ -57,7 +75,7 @@ export default function Table() {
             <th>First Name</th>
             <th>Last Name</th>
             <th>CIN</th>
-            <th>Age</th>
+            <th>Email</th>
             <th>Phone Number</th>
             <th>Action</th>
           </tr>
@@ -65,13 +83,13 @@ export default function Table() {
         <tbody id="tableBody">
           {data.map((item, index) => (
             <tr key={index}>
-              <td>{item.firstName}</td>
-              <td>{item.lastName}</td>
+              <td>{item.nom}</td>
+              <td>{item.prenom}</td>
               <td>{item.cin}</td>
-              <td>{item.age}</td>
-              <td>{item.phoneNumber}</td>
+              <td>{item.email}</td>
+              <td>{item.telephone}</td>
               <td>
-                <img className="actm" src={delet} alt="delete" />
+                <img className="actm" onClick={() => deleteAdherent(item.id)} src={delet} alt="delete" />
                 <img className="actp" src={edit} alt="edit" />
               </td>
             </tr>
