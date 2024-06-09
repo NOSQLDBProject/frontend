@@ -7,6 +7,7 @@ import LivrePage from './routes/LivrePage';
 import { useParams } from 'react-router-dom';
 import Login from './routes/Login';
 import SignUp from './routes/SignUp';
+import AddBookPage from './routes/AddBookPage';
 
 function App() {
 
@@ -29,7 +30,10 @@ function App() {
           <Route index element={<AdherentPage/>} />
           <Route path="add" element={<AddAdherentPage/>} />
         </Route>
-        <Route path="/livre" element={<LivrePage/>} />
+        <Route path="/livre">
+          <Route index element={<LivrePage/>} />
+          <Route path="add" element={<AddBookPage/>} />
+        </Route>
       </Routes>
     </Router>
   );

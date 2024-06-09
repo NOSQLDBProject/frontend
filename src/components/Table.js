@@ -77,6 +77,7 @@ export default function Table() {
             <th>CIN</th>
             <th>Email</th>
             <th>Phone Number</th>
+            <th>Loaned Book</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -88,6 +89,7 @@ export default function Table() {
               <td>{item.cin}</td>
               <td>{item.email}</td>
               <td>{item.telephone}</td>
+              <td></td>
               <td>
                 <img className="actm" onClick={() => deleteAdherent(item.id)} src={delet} alt="delete" />
                 <img className="actp" src={edit} alt="edit" />
