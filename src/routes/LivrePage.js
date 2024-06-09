@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import SharedPage from "./SharedPage";
 import './LivrePage.css';
 import blury from '../assets/blurybooks.png';
+import { useNavigate } from "react-router-dom";
 
 export default function LivrePage() {
 
     const [personalDevBooks, setPersonalDevBooks] = useState([]);
     const [actionBooks, setActionBooks] = useState([]);
     const [fictionBooks, setFictionBooks] = useState([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchBooks = async () => {
@@ -53,11 +56,16 @@ export default function LivrePage() {
         fetchBooks();
     }, []);
 
+    
+
     return (
         <SharedPage path="/livre">
             <div className="p-10 max-h-screen ">
-            <p className="title">Books</p>
-    <p className="description">Books transport us to new worlds, offering thrilling, humorous, and insightful experiences. With countless titles and genres, there's always an adventure waiting. Explore our catalog and discover your next great read.</p>
+            <p className="title flex">
+                Books
+                <button className="ml-auto w-[100px] h-[30px] bg-[#1578DA] text-white text-[12px] font-maven-pro rounded-[15px]" onClick={() => {navigate("/livre/add")}}>Add Book</button>
+            </p>
+    <p className="description text-black">Books transport us to new worlds, offering thrilling, humorous, and insightful experiences. With countless titles and genres, there's always an adventure waiting. Explore our catalog and discover your next great read.</p>
                 <p className="slider-title">Personal Development</p>
                 <div className="scroll-wrapper">
                     <div className="movies-container">

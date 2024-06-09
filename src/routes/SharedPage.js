@@ -48,8 +48,6 @@ export default function SharedPage({ children, path }) {
         navigate(path);
     }
 
-
-
     return (
         <body className='w-full h-full bg-[#F4F7FC]'>
             <div className='w-full h-[10vh] flex bg-white p-4 shadow-md mb-[8px] z-10 '>
@@ -62,7 +60,7 @@ export default function SharedPage({ children, path }) {
                         alt='Logo'
                     />
                 </div>
-                <div className='w-[3vw] h-[6vh] rounded-full bg-red-600 mb-auto mt-auto ml-auto text-white font-maven-pro font-black text-[3vh] text-center pt-1 cursor-pointer hover:opacity-75'>
+                <div onClick={() => navigateTo('/login')} className='w-[3vw] h-[6vh] rounded-full bg-red-600 mb-auto mt-auto ml-auto text-white font-maven-pro font-black text-[3vh] text-center pt-1 cursor-pointer hover:opacity-75'>
                     AA
                 </div>
             </div>
@@ -81,7 +79,7 @@ export default function SharedPage({ children, path }) {
                         </div>
                     </div>
                     <div className={`cursor-pointer w-full h-[10vh]
-                    flex ${isLivrePath ? 'bg-[#4874ED]' : ""}`} onClick={() => navigateTo("/loan")}>
+                    flex ${isLivrePath ? 'bg-[#4874ED]' : ""}`} onClick={() => navigateTo("/loans")}>
                         <div className='flex h-[65%] w-[65%] hover:bg-white/35 m-auto rounded-[12px]'>
                             <BsBank className='text-[3vh] text-white m-auto' />
                         </div>

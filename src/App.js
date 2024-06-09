@@ -7,8 +7,10 @@ import AddAdherentPage from './routes/AddAdherentPage';
 import LivrePage from './routes/LivrePage';
 import { useParams } from 'react-router-dom';
 import Login from './routes/Login';
-import SignUp from './routes/SignUp';
 import LoanPage from './routes/LoanPage';
+import AddBookPage from './routes/AddBookPage';
+import AddLoanPage from './routes/addLoanPage';
+
 
 function App() {
 
@@ -22,9 +24,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route exact path="/" render={() => (<Redirect to="/home" />)} /> */}
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<SignUp />} />
 
         <Route path="/home" element={<HomePage />} />
         <Route path="/" element={<Navigate to="/home" />} />
@@ -32,9 +32,16 @@ function App() {
           <Route index element={<AdherentPage />} />
           <Route path="add" element={<AddAdherentPage />} />
         </Route>
-        <Route path="/livre" element={<LivrePage />} />
 
-        <Route path='/loan' element={<LoanPage />} />
+        <Route path='/loans' >
+          <Route index element={<LoanPage />} />
+          <Route path="add" element={<AddLoanPage />} />
+        </Route>
+
+        <Route path="/livre">
+          <Route index element={<LivrePage />} />
+          <Route path="add" element={<AddBookPage />} />
+        </Route>
       </Routes>
     </Router>
   );
