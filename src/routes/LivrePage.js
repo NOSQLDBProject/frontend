@@ -9,21 +9,28 @@ export default function LivrePage() {
     const [personalDevBooks, setPersonalDevBooks] = useState([]);
     const [actionBooks, setActionBooks] = useState([]);
     const [fictionBooks, setFictionBooks] = useState([]);
-
     const navigate = useNavigate();
 
     useEffect(() => {
+
         const fetchBooks = async () => {
-            const PersonalDevelopementBooksList = [
-                { title: 'Atomic Habits', thumbnail: 'https://booksondemand.ma/cdn/shop/products/Atomichabits-min.jpg?v=1631701304&width=990' },
-                { title: 'Psychology of Money', thumbnail: 'https://booksondemand.ma/cdn/shop/products/81Lb75rUhLL_1.jpg?v=1631701531&width=990' },
-                { title: '48 Laws of Power', thumbnail: 'https://booksondemand.ma/cdn/shop/products/71951W96oWL.jpg?v=1631701478&width=990' },
-                { title: 'Ikigai', thumbnail: 'https://booksondemand.ma/cdn/shop/products/IKIGAI1.jpg?v=1609449282&width=990' },
-                { title: 'The Compound Effect', thumbnail: 'https://booksondemand.ma/cdn/shop/files/71nAPgrH3aL._AC_UF1000_1000_QL80.jpg?v=1702835701&width=990' },
-                { title: 'The Subtle Art', thumbnail: 'https://booksondemand.ma/cdn/shop/products/subtleart.jpg?v=1631701540&width=990' },
-                { title: 'Rich Dad Poor Dad', thumbnail: 'https://booksondemand.ma/cdn/shop/products/RichDad_PoorDadbyRobertT.Kiyosaki-books.jpg?v=1609441318&width=990' },
-                { title: 'Coming soon !', thumbnail: require('../assets/soon1.png') },
-            ];
+            
+            fetch('http://localhost:8000/livres/neo4j/all')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                data.push({ titre: 'Coming soon !', imagePath: require('../assets/soon1.png') });
+                setPersonalDevBooks(data); 
+                console.log('Books:', data);
+                console.log('Books:', personalDevBooks);
+            })
+            .catch(error => {
+                console.error('Error fetching books:', error);
+            });
 
             const ActionBooksList = [
                 { title: 'Dance of Thieves', thumbnail: 'https://booksondemand.ma/cdn/shop/products/71Ts78osPkL.jpg?v=1631701342&width=990' },
@@ -48,13 +55,17 @@ export default function LivrePage() {
                 { title: 'Coming soon !', thumbnail: require('../assets/soon3.png') },
             ];
 
-            setPersonalDevBooks(PersonalDevelopementBooksList);
+            setPersonalDevBooks(personalDevBooks);
             setActionBooks(ActionBooksList);
             setFictionBooks(FictionBooksList);
         };
 
         fetchBooks();
     }, []);
+
+    const handleDetails = (book) => {
+        navigate(`/livre/book/${book.id}/${book.auteurId}`);
+    }
 
     
 
@@ -70,15 +81,15 @@ export default function LivrePage() {
                 <div className="scroll-wrapper">
                     <div className="movies-container">
                         {personalDevBooks.map((book, index) => (
-                            <div className="movie" key={index}>
+                            <div className="movie" key={index} onClick={() => {handleDetails(book)}}>
                                 <div>
                                     <div className="movie-thumbnail">
                                         <a>
-                                            <img className="image" src={book.thumbnail} alt={book.thumbnail} />
+                                            <img className="image" src={book.imagePath} alt={book.imagePath} />
                                         </a>
                                     </div>
                                     <div className="movie-title">
-                                        <p className="movie-title-content">{book.title}</p>
+                                        <p className="movie-title-content">{book.titre}</p>
                                     </div>
                                 </div>
                             </div>
