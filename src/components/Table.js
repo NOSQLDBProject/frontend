@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import search from '../assets/search.svg';
 import delet from '../assets/delete.svg';
 import edit from '../assets/edit.svg';
-import check from '../assets/check.png';
+import check from '../assets/check.svg';
 import { useNavigate } from 'react-router-dom';
 
 export default function Table({ type }) {
