@@ -9,11 +9,28 @@ export default function LivrePage() {
     const [personalDevBooks, setPersonalDevBooks] = useState([]);
     const [actionBooks, setActionBooks] = useState([]);
     const [fictionBooks, setFictionBooks] = useState([]);
+    const [auteur,setAuteur] = useState([])
     const navigate = useNavigate();
 
     useEffect(() => {
 
         const fetchBooks = async () => {
+
+            fetch('http://localhost:8000/auteurs/all')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                setAuteur(data); 
+                console.log('Books:', data);
+                console.log('Books:', auteur);
+            })
+            .catch(error => {
+                console.error('Error fetching books:', error);
+            });
             
             fetch('http://localhost:8000/livres/neo4j/all')
             .then(response => {
@@ -31,6 +48,8 @@ export default function LivrePage() {
             .catch(error => {
                 console.error('Error fetching books:', error);
             });
+
+            
 
             const ActionBooksList = [
                 { title: 'Dance of Thieves', thumbnail: 'https://booksondemand.ma/cdn/shop/products/71Ts78osPkL.jpg?v=1631701342&width=990' },
@@ -71,7 +90,7 @@ export default function LivrePage() {
 
     return (
         <SharedPage path="/livre">
-            <div className="p-10 max-h-screen ">
+            <div className="p-10 h-full w-full">
             <p className="title flex">
                 Books
                 <button className="ml-auto w-[100px] h-[30px] bg-[#1578DA] text-white text-[12px] font-maven-pro rounded-[15px]" onClick={() => {navigate("/livre/add")}}>Add Book</button>

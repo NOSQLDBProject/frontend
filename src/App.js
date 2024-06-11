@@ -11,6 +11,7 @@ import AddAuteurPage from './routes/AddAuteurPage';
 import Book from './routes/Book';
 import AddLoanPage from './routes/addLoanPage';
 import LoanPage from './routes/LoanPage';
+import Auteur from './routes/Auteur';
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
           <Route index element={<LivrePage/>} />
           <Route path="add" element={<AddBookPage/>} />
           <Route path="book/:bookId/:auteurId" element={<Book/>} />
+          <Route path="auteur/:auteurId" element={<Auteur/>} />
         </Route>
       </Routes>
     </Router>

@@ -1,6 +1,6 @@
 import React, { useEffect , useState } from 'react';
 import SharedPage from './SharedPage';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function Book() {
 
@@ -8,6 +8,8 @@ export default function Book() {
 
     const [book, setBook] = useState();
     const [auteur, setAuteur] = useState();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         console.log('Book ID:', bookId);
@@ -52,8 +54,10 @@ export default function Book() {
                     <h1 className='text-[#1578DA] font-maven-pro text-[36px] font-bold ml-2'>
                         {book?.titre} <span className='font-normal text-[18px]'>({book?.type})</span>
                     </h1>
-                    <h2 className='text-black font-maven-pro text-[24px] font-black ml-2 mt-4'>
-                        {auteur?.name} <span className='font-thin font-comfortaa'>({auteur?.dateOfBirth})</span>
+                    <h2 className='text-black font-maven-pro text-[24px] font-black ml-2 mt-4' >
+                        <span className='cursor-pointer hover:text-[#1578DA]' 
+                        onClick={() => {navigate(`/livre/auteur/${auteurId}`)}}>{auteur?.name}</span> 
+                        <span className='font-thin font-comfortaa'>({auteur?.dateOfBirth}-{auteur?.dateOfDeath})</span>
                     </h2>
                     <p className='font-maven-pro text-[18px] text-black font-black ml-2 mt-4'>Isbn : <span className='font-comfortaa text-[14px] font-thin'>{book?.isbn}</span></p>
                     <p className='font-maven-pro text-[18px] text-black font-black ml-2 mt-4'>Description :</p>

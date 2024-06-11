@@ -7,11 +7,69 @@ import check from '../assets/check.png';
 import { useNavigate } from 'react-router-dom';
 
 export default function Table({ type }) {
-  const [data, setData] = useState([]);
+  const [data1, setData] = useState([]);
+
+
   const navigate = useNavigate();
 
+  const [listBooks, setListBooks] = useState([]);
+  const [listAdherents, setListAdherents] = useState([]);
+
+  const [updated, setUpdated] = useState(false);
+
+
+
+
+
   useEffect(() => {
-    fetch(`http://localhost:8000/${type}/all`)
+    (async () => {
+      const response = await fetch(`http://localhost:8000/${type}/all`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log(`${type}:`, data);
+
+      
+
+      if (type === 'loans') {
+
+        const updatedData = [];
+
+        for (let item of data) {
+          console.log("item", item)
+          const book = await fetchBook(item.livreId);
+          console.log("book1231234", book)
+          const adherent = await fetchAdherent(item.adherentId);
+
+          const updatedItem = {
+            ...item,
+            bookTitle: book.titre,
+            borrower: `${adherent.prenom} ${adherent.nom}`,
+          };
+
+          updatedData.push(updatedItem);
+
+          setListBooks(prevBooks => [...prevBooks, book]);
+          setListAdherents(prevAdherents => [...prevAdherents, adherent]);
+
+          console.log("updatedItem", updatedItem);
+        }
+
+        setData(updatedData);
+        console.log("data1", data1);
+      }
+      else {
+        setData(data);
+      }
+    })().catch(error => {
+      console.error(`Error fetching ${type}:`, error);
+    });
+  }, [type, updated]);
+
+
+  const fetchBook = async (id) => {
+    return fetch(`http://localhost:8000/livres/mongo/${id}`)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -19,13 +77,57 @@ export default function Table({ type }) {
         return response.json();
       })
       .then(data => {
-        console.log(`${type}:`, data);
-        setData(data);
+        console.log('Books:', data);
+        return data;
       })
       .catch(error => {
-        console.error(`Error fetching ${type}:`, error);
+        console.error('Error fetching books:', error);
       });
-  }, [type]);
+  }
+
+  const fetchAdherent = async (id) => {
+    return fetch(`http://localhost:8000/adherents/${id}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Adherents:', data);
+        return data;
+      })
+      .catch(error => {
+        console.error('Error fetching adherents:', error);
+      });
+  }
+
+  const updateLoan = (id) => {
+
+    fetch(`http://localhost:8000/loans/update/${id}`, {
+      method: 'PUT',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        console.log(`${type.charAt(0).toUpperCase() + type.slice(1)} updated successfully`);
+        fetchData();
+      })
+      .catch(error => {
+        console.error(`Error updating ${type}:`, error);
+      });
+  };
+
+  const fetchData = async () => {
+    setUpdated(!updated);
+    setUpdated(!updated);
+  };
+
 
   const deleteItem = (id) => {
     fetch(`http://localhost:8000/${type}/${id}`, {
@@ -37,7 +139,7 @@ export default function Table({ type }) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         console.log(`${type.charAt(0).toUpperCase() + type.slice(1)} deleted successfully`);
-        const newData = data.filter(item => item.id !== id);
+        const newData = data1.filter(item => item.id !== id);
         setData(newData);
       })
       .catch(error => {
@@ -62,8 +164,8 @@ export default function Table({ type }) {
                   <img className="active-search" src={search} alt="search" />
                   <input className="form-control me-4" name="searchQuery" type="search" placeholder={`Search ${type}`} aria-label="Search" />
                   <input className="form-control me-4" name="searchDate" type="date" placeholder="Search by date" aria-label="Search by date" />
-                  <button className="btn btn-outline-success" type="search">Search</button>
-                  <button className="btn btn-outline-success" onClick={() => { if (type!="loans") {navigate(`/${type}/add`) } else {navigate("/prets/add")}}} >Add {type.charAt(0).toUpperCase() + type.slice(1)}</button>
+                  <button className="btn btn-outline-success" onClick={() => { }} type="search">Search</button>
+                  <button className="btn btn-outline-success" onClick={() => { if (type != "loans") { navigate(`/${type}/add`) } else { navigate("/prets/add") } }} >Add {type.charAt(0).toUpperCase() + type.slice(1)}</button>
                 </div>
               </form>
             </div>
@@ -93,7 +195,7 @@ export default function Table({ type }) {
           </tr>
         </thead>
         <tbody id="tableBody">
-          {data.map((item, index) => (
+          {data1.map((item, index) => (
             <tr key={index}>
               {type === 'adherents' ? (
                 <>
@@ -110,11 +212,14 @@ export default function Table({ type }) {
               ) : (
                 <>
                   <td>{item.bookTitle}</td>
+
                   <td>{item.borrower}</td>
-                  <td>{item.loanDate}</td>
-                  <td>{item.returnDate}</td>
+                  <td>{item.loandate}</td>
+                  <td className={item.returnDate ? "text-green-600 font-bold p-2" : "text-red-500 italic font-bold p-2"}>
+                    {item.returnDate ? item.returnDate : "Not yet returned"}
+                  </td>
                   <td>
-                    <img className="actm"  src={check} alt="check" />
+                    {!item.returnDate && <img className="actm" src={check} alt="check" onClick={() => { updateLoan(item.id) }} />}
                   </td>
                 </>
               )}
