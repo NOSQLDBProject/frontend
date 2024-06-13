@@ -6,6 +6,10 @@ import { BsBank } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import logo from "../assets/LibraConnect.svg"
+import useUserContext from '../contex/useUserContex';
+import { PiSignOutLight } from "react-icons/pi";
+
+
 export default function SharedPage({children,path}) {
 
     const navigate = useNavigate();
@@ -15,6 +19,10 @@ export default function SharedPage({children,path}) {
     const [isLivrePath, setIsLivrePath] = useState(false);
     const [isAdherentPath, setIsAdherentPath] = useState(false);
     const [isPretPath, setIsPretPath] = useState(false);
+
+    const { currentUser,setCurrentUser } = useUserContext();
+
+    
 
 
 
@@ -35,17 +43,21 @@ export default function SharedPage({children,path}) {
             setIsPretPath(true);
         }
         console.log(path);
+        console.log(currentUser);
     }, [path]);
 
 
-    const toggleSidebar = () => {
-        setSidebarVisible(!sidebarVisible);
-        setShowMenuButton(true);
-        setTimeout(() => setShowMenuButton(false), 20);
-    };
-
     const navigateTo = (path) => {
         navigate(path);
+    }
+
+    function firstLetter(str) {
+        return str.charAt(0);
+    }
+
+    const handleLogout = () => {
+        setCurrentUser(null);
+        navigate('/login');
     }
 
 
@@ -57,9 +69,9 @@ export default function SharedPage({children,path}) {
                 transition-all duration-500 ease-in-out`}>
                     <img src={logo} className='w-[12vw]'/>
                 </div>
-                <div className='w-[3vw] h-[6vh] rounded-full bg-red-600 mb-auto mt-auto ml-auto text-white font-maven-pro font-black text-[3vh] text-center pt-1 cursor-pointer hover:opacity-75'>
-                    AA
-                </div>
+                {currentUser!=null && <div className='w-[3vw] h-[6vh] rounded-full bg-[#4874ED] mb-auto mt-auto ml-auto text-white font-maven-pro font-black text-[3vh] text-center pt-1 cursor-pointer hover:opacity-75'>
+                    {firstLetter(currentUser?.nom) + firstLetter(currentUser?.prenom)}
+                </div>}
             </div>
             <div className='flex flex-col'>
                 <div className={`w-[5vw] h-[90vh] bg-[#4874ED] pt-[3vh] mt-[-8px]`}>
@@ -69,18 +81,24 @@ export default function SharedPage({children,path}) {
                             <FaBook className={`text-[3vh] text-white m-auto `}/>
                         </div>
                     </div>
-                    <div className={`cursor-pointer w-full h-[10vh]
+                    {currentUser!=null &&<div className={`cursor-pointer w-full h-[10vh]
                     flex ${isAdherentPath? 'bg-[#4874ED]' : ""}`} onClick={() => navigateTo("/adherents")}>
                         <div className={`flex h-[65%] w-[65%] hover:bg-white/35 m-auto rounded-[12px] ${isAdherentPath && 'bg-white/35'}`}>
                             <FaUsers className={`text-[3vh] text-white m-auto `}/>
                         </div>
-                    </div>
-                    <div className={`cursor-pointer w-full h-[10vh]
+                    </div>}
+                    {currentUser!=null &&<div className={`cursor-pointer w-full h-[10vh]
                     flex ${isPretPath? 'bg-[#4874ED]' : ""}`} onClick={() => navigateTo("/prets")}>
                         <div className={`flex h-[65%] w-[65%] hover:bg-white/35 m-auto rounded-[12px] ${isPretPath && 'bg-white/35'}`}>
                             <BsBank className={`text-[3vh] text-white m-auto`}/>
                         </div>
-                    </div>
+                    </div>}
+                    {currentUser!=null &&<div className={`cursor-pointer w-full h-[10vh]
+                    flex mt-[45vh]`} onClick={handleLogout}>
+                        <div className={`flex h-[65%] w-[65%] hover:bg-white/35 m-auto rounded-[12px] ${isPretPath && 'bg-white/35'}`}>
+                            <PiSignOutLight className={`text-[4vh] text-white m-auto`}/>
+                        </div>
+                    </div>}
                 </div>
                 <div className={`overflow-y-scroll h-[89vh] w-[95vw] flex fixed flex-wrap bg-[#F4F7FC] ml-[5vw] `}>
                     {children}

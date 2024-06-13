@@ -51,7 +51,7 @@ export default function AddAdherentPage() {
             email: email,
             telephone: telephone
         };
-        fetch('http://localhost:8000/adherents/add', {
+        fetch(`http://10.72.177.197:8000/adherents/add`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

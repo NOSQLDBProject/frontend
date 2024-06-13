@@ -3,53 +3,56 @@ import SharedPage from "./SharedPage";
 import './LivrePage.css';
 import blury from '../assets/blurybooks.png';
 import { useNavigate } from "react-router-dom";
+import useUserContext from "../contex/useUserContex";
 
 export default function LivrePage() {
 
     const [personalDevBooks, setPersonalDevBooks] = useState([]);
     const [actionBooks, setActionBooks] = useState([]);
     const [fictionBooks, setFictionBooks] = useState([]);
-    const [auteur,setAuteur] = useState([])
+    const [auteur, setAuteur] = useState([])
     const navigate = useNavigate();
+
+    const { currentUser } = useUserContext();
 
     useEffect(() => {
 
         const fetchBooks = async () => {
 
-            fetch('http://localhost:8000/auteurs/all')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                setAuteur(data); 
-                console.log('Books:', data);
-                console.log('Books:', auteur);
-            })
-            .catch(error => {
-                console.error('Error fetching books:', error);
-            });
-            
-            fetch('http://localhost:8000/livres/neo4j/all')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                data.push({ titre: 'Coming soon !', imagePath: require('../assets/soon1.png') });
-                setPersonalDevBooks(data); 
-                console.log('Books:', data);
-                console.log('Books:', personalDevBooks);
-            })
-            .catch(error => {
-                console.error('Error fetching books:', error);
-            });
+            fetch(`http://10.72.177.197:8000/auteurs/all`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    setAuteur(data);
+                    console.log('Books:', data);
+                    console.log('Books:', auteur);
+                })
+                .catch(error => {
+                    console.error('Error fetching books:', error);
+                });
 
-            
+            fetch(`http://10.72.177.197:8000/livres/neo4j/all`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    data.push({ titre: 'Coming soon !', imagePath: require('../assets/soon1.png') });
+                    setPersonalDevBooks(data);
+                    console.log('Books:', data);
+                    console.log('Books:', personalDevBooks);
+                })
+                .catch(error => {
+                    console.error('Error fetching books:', error);
+                });
+
+
 
             const ActionBooksList = [
                 { title: 'Dance of Thieves', thumbnail: 'https://booksondemand.ma/cdn/shop/products/71Ts78osPkL.jpg?v=1631701342&width=990' },
@@ -60,7 +63,7 @@ export default function LivrePage() {
                 { title: 'The Assassin\'s Blade', thumbnail: 'https://booksondemand.ma/cdn/shop/products/81KTUX7JTcL-min.jpg?v=1654795661&width=990' },
                 { title: 'The Name of the Wind', thumbnail: 'https://booksondemand.ma/cdn/shop/products/91b8oNwaV1L.jpg?v=1631701522&width=990' },
                 { title: 'Coming soon !', thumbnail: require('../assets/soon2.png') },
-                
+
             ];
 
             const FictionBooksList = [
@@ -86,21 +89,21 @@ export default function LivrePage() {
         navigate(`/livre/book/${book.id}/${book.auteurId}`);
     }
 
-    
+
 
     return (
         <SharedPage path="/livre">
             <div className="p-10 h-full w-full">
-            <p className="title flex">
-                Books
-                <button className="ml-auto w-[100px] h-[30px] bg-[#1578DA] text-white text-[12px] font-maven-pro rounded-[15px]" onClick={() => {navigate("/livre/add")}}>Add Book</button>
-            </p>
-    <p className="description text-black">Books transport us to new worlds, offering thrilling, humorous, and insightful experiences. With countless titles and genres, there's always an adventure waiting. Explore our catalog and discover your next great read.</p>
+                <p className="title flex">
+                    Books
+                    {currentUser!=null && <button className="ml-auto w-[100px] h-[30px] bg-[#1578DA] text-white text-[12px] font-maven-pro rounded-[15px]" onClick={() => { navigate("/livre/add") }}>Add Book</button>}
+                </p>
+                <p className="description text-black">Books transport us to new worlds, offering thrilling, humorous, and insightful experiences. With countless titles and genres, there's always an adventure waiting. Explore our catalog and discover your next great read.</p>
                 <p className="slider-title">Personal Development</p>
                 <div className="scroll-wrapper">
                     <div className="movies-container">
                         {personalDevBooks.map((book, index) => (
-                            <div className="movie" key={index} onClick={() => {handleDetails(book)}}>
+                            <div className="movie" key={index} onClick={() => { handleDetails(book) }}>
                                 <div>
                                     <div className="movie-thumbnail">
                                         <a>
@@ -159,21 +162,21 @@ export default function LivrePage() {
                 <img class="blur" src={blury} alt=""></img>
 
                 <div class="footer">
-        
-
-        <div class="button-container">
-            <p class="footer-title">There’s even more to read.</p>
-            
-            
-            <p class="footer-description">LibraConnect has an extensive library of books across various genres, including fiction, non-fiction, biographies, self-help, and award-winning titles. Read as much as you want, anytime you want.</p>
-                    <button class="footer-button">JOIN NOW</button>
 
 
-        </div>
-        <div className="h-10 w-full">
+                    <div class="button-container">
+                        <p class="footer-title">There’s even more to read.</p>
 
-        </div>
-    </div>
+
+                        <p class="footer-description">LibraConnect has an extensive library of books across various genres, including fiction, non-fiction, biographies, self-help, and award-winning titles. Read as much as you want, anytime you want.</p>
+                        <button class="footer-button" onClick={() => navigate("/login")}>JOIN NOW</button>
+
+
+                    </div>
+                    <div className="h-10 w-full">
+
+                    </div>
+                </div>
             </div>
         </SharedPage>
     );

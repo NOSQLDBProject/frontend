@@ -6,27 +6,34 @@ import useUserContext from '../contex/useUserContex';
 export default function Login() {
     const navigateTo = useNavigate();
 
-    const useContext = useUserContext();
-    const { currentUser, setCurrentUser } = useContext;
+     
+    const { currentUser, setCurrentUser } = useUserContext();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
-        fetch('http://localhost:8000/users/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                setCurrentUser(data);
+    const handleLogin = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await fetch(`http://10.72.177.197:8000/users/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
             });
 
-        // navigateTo('/home');
+            if (response.ok) {
+                const data = await response.json();
+                setCurrentUser(data);
+                console.log("user", currentUser);
+                navigateTo('/home');
+            } else {
+                console.error('Login failed');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
 
     return (
@@ -81,11 +88,11 @@ export default function Login() {
                         </div>
                         <button
                             class="mt-3 text-white font-medium text-base w-full sm:w-[380px] h-10 py-2 rounded-lg bg-[#1578DA]"
-                            type="submit">Sign in</button>
+                            onClick={handleLogin}>Sign in</button>
 
                         <div class="mt-3 text-center text-black text-opacity-50 font-medium">Don't have an account?
 
-                            <a class="text-[#1578DA] font-medium cursor-pointer">  Create an account</a>
+                            <a class="text-[#1578DA] font-medium cursor-pointer" onClick={() => {navigateTo("/home")}}> Explore books</a>
                         </div>
                     </form>
                 </div>

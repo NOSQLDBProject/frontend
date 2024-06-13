@@ -16,7 +16,7 @@ export default function AddLoanPage() {
 
 
     useEffect(() => {
-        fetch('http://localhost:8000/livres/mongo/all')
+        fetch(`http://10.72.177.197:8000/livres/mongo/all`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -33,7 +33,7 @@ export default function AddLoanPage() {
             });
 
         // Fetch adherents
-        fetch('http://localhost:8000/adherents/all')
+        fetch(`http://10.72.177.197:8000/adherents/all`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -65,7 +65,7 @@ export default function AddLoanPage() {
             adherentId: adherentId,
         };
 
-        fetch('http://localhost:8000/loans/add', {
+        fetch(`http://10.72.177.197:8000/loans/add`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

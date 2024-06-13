@@ -15,7 +15,7 @@ export default function AddBookPage() {
     const [optionsList, setOptionsList] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:8000/auteurs/all')
+        fetch(`http://10.72.177.197:8000/auteurs/all`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -68,7 +68,7 @@ export default function AddBookPage() {
                 description: description
             }
 
-            fetch('http://localhost:8000/livres/mongo/add', {
+            fetch(`http://10.72.177.197:8000/livres/mongo/add`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -81,7 +81,7 @@ export default function AddBookPage() {
             })
             .catch(error => console.error('Error:', error));
 
-            fetch('http://localhost:8000/livres/neo4j', {
+            fetch(`http://10.72.177.197:8000/livres/neo4j`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

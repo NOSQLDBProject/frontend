@@ -15,7 +15,7 @@ export default function Book() {
         console.log('Book ID:', bookId);
         console.log('Auteur ID:', auteurId);
         
-        fetch(`http://localhost:8000/auteurs/id/${auteurId}`)
+        fetch(`http://10.72.177.197:8000/auteurs/id/${auteurId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -30,7 +30,7 @@ export default function Book() {
                 console.error('Error fetching auteur:', error);
             });
 
-        fetch(`http://localhost:8000/livres/neo4j/${bookId}`)
+        fetch(`http://10.72.177.197:8000/livres/neo4j/${bookId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
