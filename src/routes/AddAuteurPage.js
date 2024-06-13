@@ -33,7 +33,7 @@ export default function AddAuteurPage() {
             dateOfDeath
         };
     
-        fetch(`http://10.72.177.197:8000/auteurs/add`, {
+        fetch(`http://localhost:8000/auteurs/add`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

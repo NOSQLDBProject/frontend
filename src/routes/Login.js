@@ -15,7 +15,7 @@ export default function Login() {
     const handleLogin = async (event) => {
         event.preventDefault();
         try {
-            const response = await fetch(`http://10.72.177.197:8000/users/login`, {
+            const response = await fetch(`http://localhost:8000/users/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

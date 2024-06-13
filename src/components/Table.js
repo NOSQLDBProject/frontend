@@ -23,7 +23,7 @@ export default function Table({ type }) {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch(`http://10.72.177.197:8000/${type}/all`);
+      const response = await fetch(`http://localhost:8000/${type}/all`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -69,7 +69,7 @@ export default function Table({ type }) {
 
 
   const fetchBook = async (id) => {
-    return fetch(`http://10.72.177.197:8000/livres/mongo/${id}`)
+    return fetch(`http://localhost:8000/livres/mongo/${id}`)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -86,7 +86,7 @@ export default function Table({ type }) {
   }
 
   const fetchAdherent = async (id) => {
-    return fetch(`http://10.72.177.197:8000/adherents/${id}`)
+    return fetch(`http://localhost:8000/adherents/${id}`)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -104,7 +104,7 @@ export default function Table({ type }) {
 
   const updateLoan = (id) => {
 
-    fetch(`http://10.72.177.197:8000/loans/update/${id}`, {
+    fetch(`http://localhost:8000/loans/update/${id}`, {
       method: 'PUT',
       mode: 'cors',
       headers: {
@@ -132,7 +132,7 @@ export default function Table({ type }) {
   const deleteItem = (id, adherent) => {
     if (adherent.livreLoaned == []) {
       if (window.confirm("Are you sure you want to delete this adherent?")) {
-        fetch(`http://10.72.177.197:8000/${type}/${id}`, {
+        fetch(`http://localhost:8000/${type}/${id}`, {
           method: 'DELETE',
           mode: 'cors',
         })

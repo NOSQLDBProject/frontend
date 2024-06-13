@@ -17,7 +17,7 @@ export default function Auteur() {
     useEffect(() => {
         console.log('Auteur ID:', auteurId);
         
-        fetch(`http://10.72.177.197:8000/auteurs/id/${auteurId}`)
+        fetch(`http://localhost:8000/auteurs/id/${auteurId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -32,7 +32,7 @@ export default function Auteur() {
                 console.error('Error fetching auteur:', error);
             });
     
-        fetch(`http://10.72.177.197:8000/livres/neo4j/all`)
+        fetch(`http://localhost:8000/livres/neo4j/all`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
